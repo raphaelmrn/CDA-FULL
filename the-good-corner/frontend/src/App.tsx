@@ -1,12 +1,12 @@
+import { Outlet } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import RecentAds from "./components/RecentAds";
 
 function App() {
 	return (
 		<>
 			<Header />
-			<RecentAds />
+			<Outlet />
 		</>
 	);
 }
