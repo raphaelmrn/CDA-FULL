@@ -27,6 +27,7 @@ const router = createBrowserRouter([
 	},
 ]);
 
+// biome-ignore lint/style/noNonNullAssertion: There *must* be a #root element for my whole page to work, this has no meaning otherwise
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<RouterProvider router={router} />
