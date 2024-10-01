@@ -4,11 +4,13 @@ import express from "express";
 import { dataSource } from "./config/db";
 import { Ad } from "./entities/Ad";
 import { Category } from "./entities/Category";
+import cors from "cors";
 
 //const db = new sqlite3.Database("./the-good-corner.sqlite");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const port = 3000;
 

@@ -48,12 +48,12 @@ function Header() {
 			</div>
 			<nav className="categories-navigation">
 				{categories.map((cat, id) => (
-					<>
+					<span key={cat}>
 						{id > 0 && "•"}
 						<a href="/" className="category-navigation-link" key={cat}>
 							{cat}
 						</a>
-					</>
+					</span>
 				))}
 			</nav>
 		</header>
