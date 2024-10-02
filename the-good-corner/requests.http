@@ -1,6 +1,12 @@
 GET http://localhost:3000
 
 ###
+GET http://localhost:3000/tags
+
+###
+GET http://localhost:3000/categories
+
+###
 GET http://localhost:3000/ads
 
 ###
@@ -21,5 +27,13 @@ Content-Type: application/json
 		"createdAt":"maintenant",
 		"picture":"https://imgur.com",
 		"location":"Lille"
+}
+
+###
+POST http://localhost:3000/tags
+Content-Type: application/json
+
+{
+		"name":"Toto"
 }
 

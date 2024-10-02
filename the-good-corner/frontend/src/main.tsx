@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdDetail from "./pages/AdDetail.tsx";
-import RecentAds from "./components/RecentAds.tsx";
+import RecentAds from "./pages/RecentAds.tsx";
 import AdCreaForm from "./pages/AdCreaForm.tsx";
 
 const router = createBrowserRouter([

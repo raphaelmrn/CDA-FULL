@@ -1,27 +1,27 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Category } from "../types/Category";
+
 function Header() {
-	const categories = [
-		"Ameublement",
-		"Électroménager",
-		"Photographie",
-		"Informatique",
-		"Téléphonie",
-		"Vélos",
-		"Véhicules",
-		"Sport",
-		"Habillement",
-		"Bébé",
-		"Outillage",
-		"Services",
-		"Vacances",
-	];
+    const [categories, setCategories]=useState<Category[]>([])
+
+    async function fetchCategories() {
+        const {data} = await axios.get<Category[]>("http://localhost:3000/categories")
+        setCategories(data)
+    }
+
+    useEffect( ()=>{
+        fetchCategories()
+    }, [] )
 	return (
 		<header className="header">
 			<div className="main-menu">
 				<h1>
-					<a href="/" className="button logo link-button">
+					<Link to="/" className="button logo link-button">
 						<span className="mobile-short-label">TGC</span>
 						<span className="desktop-long-label">THE GOOD CORNER</span>
-					</a>
+					</Link>
 				</h1>
 				<form className="text-field-with-button">
 					<input className="text-field main-search-field" type="search" />
@@ -41,18 +41,18 @@ function Header() {
 						</svg>
 					</button>
 				</form>
-				<a href="/post-ad" className="button link-button">
+				<Link to="/ads/new" className="button link-button">
 					<span className="mobile-short-label">Publier</span>
 					<span className="desktop-long-label">Publier une annonce</span>
-				</a>
+				</Link>
 			</div>
 			<nav className="categories-navigation">
 				{categories.map((cat, id) => (
-					<span key={cat}>
+					<span key={cat.id}>
 						{id > 0 && "•"}
-						<a href="/" className="category-navigation-link" key={cat}>
-							{cat}
-						</a>
+						<Link to="/" className="category-navigation-link" >
+							{cat.name}
+						</Link>
 					</span>
 				))}
 			</nav>

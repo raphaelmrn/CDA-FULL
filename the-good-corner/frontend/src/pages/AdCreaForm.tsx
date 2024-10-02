@@ -21,12 +21,13 @@ export default function AdCreaForm() {
         const formData = new FormData(form as HTMLFormElement)
         const formJson = Object.fromEntries(formData.entries())
 
-        // console.log(form)
-        // console.log(formData)
+        console.log(form)
+        console.log(formData)
         console.log(formJson)
 
     }
     return (
+        <main className="main-content">
     <form onSubmit={hSubmit}>
         <label>
             Titre:
@@ -39,5 +40,6 @@ export default function AdCreaForm() {
         </select>
         <button className="button">Create Ad!</button>
     </form>
+        </main>
     )
 }

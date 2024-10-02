@@ -1,4 +1,4 @@
-import AdCard, { AdCardProps } from "./AdCard";
+import AdCard, { AdCardProps } from "../components/AdCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
