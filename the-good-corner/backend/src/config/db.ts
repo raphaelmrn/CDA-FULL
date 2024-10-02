@@ -10,4 +10,6 @@ export const dataSource = new DataSource({
 	synchronize: false,
 	migrations: ["./migrations/*.ts"],
 	migrationsTableName: "migrations",
+
+	// synchronize: true
 });

@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdDetail from "./pages/AdDetail.tsx";
 import RecentAds from "./components/RecentAds.tsx";
+import AdCreaForm from "./pages/AdCreaForm.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
 				path: "/ads/:adId",
 				element: <AdDetail />,
 			},
+			{
+				path: "/ads/new",
+				element: <AdCreaForm />,
+			},
+			
 		],
 	},
 ]);
