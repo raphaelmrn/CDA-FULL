@@ -1,5 +1,6 @@
 import {
 	BaseEntity,
+	BeforeInsert,
 	Column,
 	Entity,
 	JoinTable,
@@ -34,7 +35,12 @@ export class Ad extends BaseEntity {
 	location!: string;
 
 	@Column()
-	createdAt!: string;
+	createdAt!: Date;
+
+	@BeforeInsert()
+	updateDates() {
+		this.createdAt = new Date();
+	}  
 
 	@ManyToOne(
 		() => Category,

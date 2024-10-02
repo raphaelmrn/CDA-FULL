@@ -25,9 +25,9 @@ Keskona:
 
 KESKONFOUT:
  - [frontend] src/pages/AdCreaForm.tsx:
-    - envoyer données backend
-    - ajouter des champs pour matcher la data du backend (Ad)
-    - ajouter des champs pour Category
+    - ✅ envoyer données backend
+    - ✅ ajouter des champs pour matcher la data du backend (Ad)
+    - ✅ ajouter des champs pour Category
     - ajouter des champs pour Tag
  
 Keskifofaire:

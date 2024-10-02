@@ -24,16 +24,39 @@ export default function AdCreaForm() {
         console.log(form)
         console.log(formData)
         console.log(formJson)
-
+        
+        axios.post("http://localhost:3000/ads", formJson)
     }
+
+
     return (
         <main className="main-content">
     <form onSubmit={hSubmit}>
-        <label>
+    <label>
             Titre:
             <input className="text-field" name="title" />
         </label>
-        <select name="category">
+        <label>
+            Description:
+            <input className="text-field" name="description" />
+        </label>
+        <label>
+        Owner:
+            <input className="text-field" name="owner" />
+        </label>
+        <label>
+        Price:
+            <input className="text-field" name="price" />
+        </label>
+        <label>
+        Picture:
+            <input className="text-field" name="picture" />
+        </label>
+        <label>
+        Location:
+            <input className="text-field" name="location" />
+        </label>
+        <select name="categoryId">
         {
             categories.map((category)=><option key={category.id} value={category.id}>{category.name}</option>)
         }
