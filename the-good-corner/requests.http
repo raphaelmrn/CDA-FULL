@@ -37,3 +37,10 @@ Content-Type: application/json
 		"name":"Toto"
 }
 
+###
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+		"name":"misc."
+}

@@ -17,13 +17,14 @@ export default function AdCreaForm() {
 
     const hSubmit = (evt: FormEvent)=>{
         evt.preventDefault()
+        
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement)
         const formJson = Object.fromEntries(formData.entries())
 
-        console.log(form)
-        console.log(formData)
-        console.log(formJson)
+        // console.log(form)
+        // console.log(formData)
+        // console.log(formJson)
         
         axios.post("http://localhost:3000/ads", formJson)
     }
@@ -32,7 +33,7 @@ export default function AdCreaForm() {
     return (
         <main className="main-content">
     <form onSubmit={hSubmit}>
-    <label>
+        <label>
             Titre:
             <input className="text-field" name="title" />
         </label>

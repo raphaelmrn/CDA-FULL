@@ -4,8 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdDetail from "./pages/AdDetail.tsx";
-import RecentAds from "./pages/RecentAds.tsx";
 import AdCreaForm from "./pages/AdCreaForm.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import CategoryPage from "./pages/CategoryPage.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -14,11 +15,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <RecentAds />,
-			},
-			{
-				path: "/about",
-				element: <p>About</p>,
+				element: <HomePage />,
 			},
 			{
 				path: "/ads/:adId",
@@ -27,6 +24,10 @@ const router = createBrowserRouter([
 			{
 				path: "/ads/new",
 				element: <AdCreaForm />,
+			},
+			{
+				path: "/categories/:catId",
+				element: <CategoryPage />,
 			},
 			
 		],

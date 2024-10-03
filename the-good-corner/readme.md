@@ -22,15 +22,24 @@ Keskona:
    - ✅ add
  - ✅ [backend] index.ts:
    - ✅ splitter les routes
-
-KESKONFOUT:
  - [frontend] src/pages/AdCreaForm.tsx:
     - ✅ envoyer données backend
     - ✅ ajouter des champs pour matcher la data du backend (Ad)
     - ✅ ajouter des champs pour Category
-    - ajouter des champs pour Tag
+  - ✅ [frontend] src/pages/CategoryDetail.tsx: 
+    - ✅ ... tout ?
+
+KESKONFOUT:
  
 Keskifofaire:
+ - [frontend] src/pages/AdCreaForm.tsx:
+    - ajouter des champs pour Tag
+ - [frontend] atomic design:
+   - atoms/
+   - molecules/
+   - organisms/
+   - templates/
+   - pages/
  - [backend] Routes Category (BREAD)
    - read
    - edit
@@ -46,7 +55,5 @@ Keskifofaire:
     - ajout de la photo
     - css
   - [frontend] src/pages/AdDetail.tsx: 
-    - ... tout ?
-  - [frontend] src/pages/CategoryDetail.tsx: 
     - ... tout ?
     
