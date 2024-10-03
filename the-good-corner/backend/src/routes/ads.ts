@@ -2,17 +2,21 @@ import { Router } from "express";
 import { Ad } from "../entities/Ad";
 import { Category } from "../entities/Category";
 import { Tag } from "../entities/Tag";
-import { In } from "typeorm";
+import { In, Like } from "typeorm";
 
 const adsRouter = Router()
 
 adsRouter.get("/", async (req, res) => {
 	const categoryId = Number(req.query.categoryId);
+	const needle = req.query.needle
 	let whereClause = {};
 	if (categoryId)
 		whereClause = {
 			category: { id: categoryId },
 		};
+	if (needle)
+		whereClause = { title: Like(`%${needle}%`) }
+		
 	try {
 		const ads = await Ad.find({
 			relations: {

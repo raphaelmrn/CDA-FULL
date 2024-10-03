@@ -34,6 +34,9 @@ Keskona:
    - pages/
  - [frontend] src/pages/AdCreaForm.tsx:
     - ajouter des champs pour Tag
+  - [frontend] src/pages/AdDetail.tsx: 
+    - ... tout ?
+ - [frontend] src/molecules/Search.tsx: recherche d'ads en fonction d'une string
 
 KESKONFOUT:
  
@@ -55,6 +58,7 @@ Keskifofaire:
  - [frontend] src/components/AdCard.tsx: 
     - ajout de la photo
     - css
-  - [frontend] src/pages/AdDetail.tsx: 
-    - ... tout ?
-    
+  - AdEditionForm:
+    - Champs invariables
+    - Noms des champs (raccord backend: typage)
+  - Luxon

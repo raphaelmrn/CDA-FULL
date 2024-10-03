@@ -1,3 +1,4 @@
+import {DateTime} from "luxon"
 export type AdDetailProps={
 	title:string,
 	picture:string,
@@ -21,7 +22,7 @@ export default function AdDetail(props:AdDetailProps) {
 		</div>
 		<hr className="separator" />
 		<div className="ad-details-owner">
-		  Annoncée publiée par <b>{props.owner}</b> {props.createdAt}.
+		  Annonce publiée par <b>{props.owner || "un anonyme"}</b> {DateTime.fromISO(props.createdAt).setLocale('fr').toRelative()}.
 		</div>
 		<a
 		  href={props.owner}
