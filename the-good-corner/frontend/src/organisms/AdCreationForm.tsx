@@ -1,18 +1,30 @@
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Category } from "../types/Category";
+import Select from 'react-select'
 
 export default function AdCreationForm() {
-
     const [categories, setCategories]=useState<Category[]>([])
+    const [tags, setTags]=useState([])
 
-    async function fetchCategories() {
+      async function fetchCategories() {
         const {data} = await axios.get<Category[]>("http://localhost:3000/categories")
         setCategories(data)
     }
+    async function fetchTags() {
+        let {data} = await axios.get("http://localhost:3000/tags")
+        type ApiTag = {
+            id:number,
+            name:string
+        }
+        data = data.map((apiTag:ApiTag)=>({value:apiTag.id, label: apiTag.name}))
+        setTags(data)
+    }
+    
 
     useEffect( ()=>{
         fetchCategories()
+        fetchTags()
     }, [] )
 
     const hSubmit = (evt: FormEvent)=>{
@@ -62,7 +74,7 @@ export default function AdCreationForm() {
         </select>
         <label>
             Tags:
-            <input className="text-field" name="tagsIds" />
+            <Select options={tags} isMulti name="tagsIds" delimiter="," />
         </label>
         <button className="button">Create Ad!</button>
     </form>
