@@ -32,10 +32,10 @@ Keskona:
    - molecules/
    - organisms/
    - pages/
-
-KESKONFOUT:
  - [frontend] src/pages/AdCreaForm.tsx:
     - ajouter des champs pour Tag
+
+KESKONFOUT:
  
 Keskifofaire:
  - [frontend] atomic design:

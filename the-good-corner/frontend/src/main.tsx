@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdDetail from "./pages/AdDetail.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
 import AdCreationPage from "./pages/AdCreationPage.tsx";
+import AdPage from "./pages/AdPage.tsx";
+import AdEditionPage from "./pages/AdEditionPage.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/ads/:adId",
-				element: <AdDetail />,
+				element: <AdPage />,
+			},
+			{
+				path: "/ads/:adId/edit",
+				element: <AdEditionPage />,
 			},
 			{
 				path: "/ads/new",
