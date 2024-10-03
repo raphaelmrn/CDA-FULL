@@ -4,9 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdDetail from "./pages/AdDetail.tsx";
-import AdCreaForm from "./pages/AdCreaForm.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
+import AdCreationPage from "./pages/AdCreationPage.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/ads/new",
-				element: <AdCreaForm />,
+				element: <AdCreationPage />,
 			},
 			{
 				path: "/categories/:catId",

@@ -28,18 +28,19 @@ Keskona:
     - ✅ ajouter des champs pour Category
   - ✅ [frontend] src/pages/CategoryDetail.tsx: 
     - ✅ ... tout ?
-
-KESKONFOUT:
- 
-Keskifofaire:
- - [frontend] src/pages/AdCreaForm.tsx:
-    - ajouter des champs pour Tag
  - [frontend] atomic design:
-   - atoms/
    - molecules/
    - organisms/
-   - templates/
    - pages/
+
+KESKONFOUT:
+ - [frontend] src/pages/AdCreaForm.tsx:
+    - ajouter des champs pour Tag
+ 
+Keskifofaire:
+ - [frontend] atomic design:
+   - atoms/
+   - templates/
  - [backend] Routes Category (BREAD)
    - read
    - edit

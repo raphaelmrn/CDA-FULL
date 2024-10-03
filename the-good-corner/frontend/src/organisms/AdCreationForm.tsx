@@ -2,7 +2,7 @@ import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Category } from "../types/Category";
 
-export default function AdCreaForm() {
+export default function AdCreationForm() {
 
     const [categories, setCategories]=useState<Category[]>([])
 
@@ -22,9 +22,7 @@ export default function AdCreaForm() {
         const formData = new FormData(form as HTMLFormElement)
         const formJson = Object.fromEntries(formData.entries())
 
-        // console.log(form)
-        // console.log(formData)
-        // console.log(formJson)
+        console.log(formJson);
         
         axios.post("http://localhost:3000/ads", formJson)
     }
@@ -62,6 +60,10 @@ export default function AdCreaForm() {
             categories.map((category)=><option key={category.id} value={category.id}>{category.name}</option>)
         }
         </select>
+        <label>
+            Tags:
+            <input className="text-field" name="tagsIds" />
+        </label>
         <button className="button">Create Ad!</button>
     </form>
         </main>

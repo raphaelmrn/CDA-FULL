@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { Ad } from "../entities/Ad";
 import { Category } from "../entities/Category";
+import { Tag } from "../entities/Tag";
+import { In } from "typeorm";
 
 const adsRouter = Router()
 
@@ -15,6 +17,7 @@ adsRouter.get("/", async (req, res) => {
 		const ads = await Ad.find({
 			relations: {
 				category: true,
+				tags:true
 			},
 			where: whereClause,
 		});
@@ -58,6 +61,7 @@ adsRouter.post("/", async (req, res) => {
 		picture,
 		location,
 		categoryId,
+		tagsIds
 	} = req.body;
 	try {
 		const ad = new Ad();
@@ -68,9 +72,21 @@ adsRouter.post("/", async (req, res) => {
 		ad.createdAt = createdAt;
 		ad.picture = picture;
 		ad.location = location;
+
 		const category = await Category.findOneBy({ id: categoryId });
 		if (category) ad.category = category;
 		else throw new Error()
+
+const tags = await Tag.find({
+	where:{
+		id: In(tagsIds)
+	}
+})
+ad.tags=tags
+
+console.log(ad);
+
+
 		ad.save();
 		return res.status(201).send();
 	} catch (err) {
