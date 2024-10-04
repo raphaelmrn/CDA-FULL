@@ -7,7 +7,6 @@ import HomePage from "./pages/HomePage.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
 import AdCreationPage from "./pages/AdCreationPage.tsx";
 import AdPage from "./pages/AdPage.tsx";
-import AdEditionPage from "./pages/AdEditionPage.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -21,10 +20,6 @@ const router = createBrowserRouter([
 			{
 				path: "/ads/:adId",
 				element: <AdPage />,
-			},
-			{
-				path: "/ads/:adId/edit",
-				element: <AdEditionPage />,
 			},
 			{
 				path: "/ads/new",

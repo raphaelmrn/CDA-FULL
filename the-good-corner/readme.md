@@ -37,8 +37,13 @@ Keskona:
   - [frontend] src/pages/AdDetail.tsx: 
     - ... tout ?
  - [frontend] src/molecules/Search.tsx: recherche d'ads en fonction d'une string
+  - Luxon
+  - AdDetail
+    - swap enrte formulaire et detail
 
 KESKONFOUT:
+ - [frontend] src/components/AdCard.tsx: 
+    - suppression annonce
  
 Keskifofaire:
  - [frontend] atomic design:
@@ -55,10 +60,92 @@ Keskifofaire:
    - read
    - edit
    - delete
- - [frontend] src/components/AdCard.tsx: 
-    - ajout de la photo
-    - css
+  - pas de 404 sur length=0
   - AdEditionForm:
     - Champs invariables
     - Noms des champs (raccord backend: typage)
-  - Luxon
+ - [frontend] src/components/AdCard.tsx: 
+    - ajout de la photo
+    - css
+
+--------------
+
+
+
+# Glossaire
+ActionA //<- action simple, immediate
+(ActionA...) //<- action complexe, longue
+(...A) //<- l'action est reellement finie
+
+# Cas simple: pas d'asynchrone
+ActionA
+ActionB
+ActionC(needB)
+
+# Cas moins simple: A est long
+(ActionA...)
+ActionB
+ActionC(needB)
+(...A)
+
+# Cas BIEN POURRI: *tout** est long
+(ActionA...)
+(ActionB...)
+(ActionC...)(needB)
+(...C)
+(...B)
+(...A)
+
+---
+# Callbacks
+(ActionA...)
+(ActionB...)
+  (...B)
+    (ActionC...)(needB)
+(...C)
+(...A)
+
+---
+# .then() (Promise<>)
+(ActionA...)
+(ActionB...)
+  .then((...B)(ActionC...)(needB))
+(...C)
+(...A)
+
+---
+# async/await 
+(ActionA...)
+await (ActionB...)
+NAN TAGGLE JATTENDS
+(...B)
+(ActionC...)(needB)
+(...C)
+(...A)
+
+---
+## Pourquoi les Promises c'est bien ?
+
+### async/await: sequentiel
+await (ActionA...)
+NAN TAGGLE JATTENDS
+(...A)
+await (ActionB...)
+NAN TAGGLE JATTENDS
+(...B)
+await (ActionC...)
+NAN TAGGLE JATTENDS
+(...C)
+
+
+ActionD(needA, B, C)
+
+=>LONG
+
+### Promises: parallelisme
+(ActionA...)
+(ActionB...)
+(ActionC...)
+
+Quand(A, B, C) // Promise.all
+ActionD(needA, B, C)

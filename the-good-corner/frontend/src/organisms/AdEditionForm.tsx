@@ -2,6 +2,7 @@ import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Category } from "../types/Category";
 import Select from 'react-select'
+import { useNavigate } from "react-router-dom";
 
 export type AdEditionFormProps={
     id:number,
@@ -14,6 +15,7 @@ export type AdEditionFormProps={
     location:string
 }
 export default function AdEditionForm(props:AdEditionFormProps) {
+    const navigate = useNavigate()
     const [categories, setCategories]=useState<Category[]>([])
     const [tags, setTags]=useState([])
 
@@ -49,45 +51,51 @@ export default function AdEditionForm(props:AdEditionFormProps) {
         axios.put(`http://localhost:3000/ads/${props.id}`, formJson)
     }
 
+    const hDelete = async ()=>{
+        await axios.delete(`http://localhost:3000/ads/${props.id}`)
+        navigate("/")
+    }
+
 
     return (
         <main className="main-content">
-    <form onSubmit={hSubmit}>
-        <label>
-            Titre:
-            <input className="text-field" name="title" value={props.title}/>
-        </label>
-        <label>
-            Description:
-            <input className="text-field" name="description" value={props.description} />
-        </label>
-        <label>
-        Owner:
-            <input className="text-field" name="owner"  value={props.owner}/>
-        </label>
-        <label>
-        Price:
-            <input className="text-field" name="price"  value={props.price}/>
-        </label>
-        <label>
-        Picture:
-            <input className="text-field" name="picture"  value={props.picture}/>
-        </label>
-        <label>
-        Location:
-            <input className="text-field" name="location"  value={props.location}/>
-        </label>
-        <select name="categoryId">
-        {
-            categories.map((category)=><option key={category.id} value={category.id}>{category.name}</option>)
-        }
-        </select>
-        <label>
-            Tags:
-            <Select options={tags} isMulti name="tagsIds" delimiter="," />
-        </label>
-        <button className="button">Update Ad!</button>
-    </form>
+            <form onSubmit={hSubmit}>
+                <label>
+                    Titre:
+                    <input className="text-field" name="title" value={props.title}/>
+                </label>
+                <label>
+                    Description:
+                    <input className="text-field" name="description" value={props.description} />
+                </label>
+                <label>
+                Owner:
+                    <input className="text-field" name="owner"  value={props.owner}/>
+                </label>
+                <label>
+                Price:
+                    <input className="text-field" name="price"  value={props.price}/>
+                </label>
+                <label>
+                Picture:
+                    <input className="text-field" name="picture"  value={props.picture}/>
+                </label>
+                <label>
+                Location:
+                    <input className="text-field" name="location"  value={props.location}/>
+                </label>
+                <select name="categoryId">
+                {
+                    categories.map((category)=><option key={category.id} value={category.id}>{category.name}</option>)
+                }
+                </select>
+                <label>
+                    Tags:
+                    <Select options={tags} isMulti name="tagsIds" delimiter="," />
+                </label>
+                <button className="button">Update Ad!</button>
+            </form>
+            <button onClick={hDelete}>Delete Ad!</button>
         </main>
     )
 }
