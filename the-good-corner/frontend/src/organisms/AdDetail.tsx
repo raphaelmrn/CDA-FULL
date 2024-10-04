@@ -6,7 +6,9 @@ export type AdDetailProps={
 	description:string,
 	owner:string,
 	createdAt:string,
-	location:string
+	location:string,
+	category:string,
+    tags:string[]
 }
 export default function AdDetail(props:AdDetailProps) {
 	return 		<main className="main-content">

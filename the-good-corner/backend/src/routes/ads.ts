@@ -25,7 +25,6 @@ adsRouter.get("/", async (req, res) => {
 			},
 			where: whereClause,
 		});
-		if (!ads.length) return res.status(404).send("No Ads found");
 		return res.json(ads);
 	} catch (err) {
 		return res.status(500).send(err);
@@ -35,7 +34,7 @@ adsRouter.get("/", async (req, res) => {
 adsRouter.get("/:id", async (req, res) => {
 	const id = Number(req.params.id);
 	try {
-		const ad = await Ad.findOneBy({ id });
+		const ad = await Ad.findOne({where: {id}, relations:{category:true,tags:true} });
 		if (!ad) return res.status(404).send("Ad not found");
 		return res.json(ad);
 	} catch (err) {
@@ -81,12 +80,12 @@ adsRouter.post("/", async (req, res) => {
 		if (category) ad.category = category;
 		else throw new Error()
 
-const tags = await Tag.find({
-	where:{
-		id: In(tagsIds)
-	}
-})
-ad.tags=tags
+		const tags = await Tag.find({
+			where:{
+				id: In(tagsIds)
+			}
+		})
+		ad.tags=tags
 
 		ad.save();
 		return res.status(201).send();
@@ -129,12 +128,12 @@ adsRouter.put("/:id", async (req, res) => {
 			}
 		})
 		ad.tags=tags
-
-		console.log(ad);
 		
 		ad.save();
 		return res.status(200).send();
 	} catch (err) {
+		console.log(req.body)
+		console.error(err)
 		return res.status(500).send(err);
 	}
 });

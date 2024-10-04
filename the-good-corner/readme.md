@@ -7,9 +7,11 @@ Keskona:
  - [frontend] src/pages/AdCreaForm.tsx: formulaire
  - [backend] Routes Category (BREAD)
     - browse
+    - add
  - [backend] Routes Ad (BREAD)
     - browse
     - read
+    - edit
     - add
     - delete
  - ✅ [frontend] src/components/Header.tsx: 
@@ -40,37 +42,24 @@ Keskona:
   - Luxon
   - AdDetail
     - swap enrte formulaire et detail
-
-KESKONFOUT:
  - [frontend] src/components/AdCard.tsx: 
     - suppression annonce
+  - AdEditionForm:
+    - Champs invariables
+  - pas de 404 sur length=0
+
+KESKONFOUT:
  
 Keskifofaire:
  - [frontend] atomic design:
    - atoms/
    - templates/
- - [backend] Routes Category (BREAD)
-   - read
-   - edit
-   - add
-   - delete
- - [backend] Routes Ad (BREAD)
-    - edit
- - [backend] Routes Tag (BREAD)
-   - read
-   - edit
-   - delete
-  - pas de 404 sur length=0
-  - AdEditionForm:
-    - Champs invariables
-    - Noms des champs (raccord backend: typage)
  - [frontend] src/components/AdCard.tsx: 
     - ajout de la photo
     - css
-
+  - AdEditionForm:
+    - ❌ Noms des champs (raccord backend: typage)
 --------------
-
-
 
 # Glossaire
 ActionA //<- action simple, immediate
@@ -140,7 +129,7 @@ NAN TAGGLE JATTENDS
 
 ActionD(needA, B, C)
 
-=>LONG
+=>LONG ! Durée de A + Durée de B + Durée de C
 
 ### Promises: parallelisme
 (ActionA...)
@@ -149,3 +138,5 @@ ActionD(needA, B, C)
 
 Quand(A, B, C) // Promise.all
 ActionD(needA, B, C)
+
+=> Aussi long que la plus longue des actions

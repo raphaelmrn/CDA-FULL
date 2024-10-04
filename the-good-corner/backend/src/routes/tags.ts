@@ -6,7 +6,6 @@ const tagsRouter = Router()
 tagsRouter.get("/", async (req, res) => {
 	try {
 		const tags = await Tag.find();
-		if (!tags.length) return res.status(404).send("No Tags found");
 		return res.json(tags);
 	} catch (err) {
 		return res.status(500).send(err);
