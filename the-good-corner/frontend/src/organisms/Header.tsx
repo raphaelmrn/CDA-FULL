@@ -1,14 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Category } from "../types/Category";
+import { Category } from "../types/Api";
 import Search from "../molecules/Search";
+import api from "../libs/api";
 
 function Header() {
     const [categories, setCategories]=useState<Category[]>([])
 
     async function fetchCategories() {
-        const {data} = await axios.get<Category[]>("http://localhost:3000/categories")
+        const data = await api.getCategories()
         setCategories(data)
     }
 

@@ -55,7 +55,6 @@ Keskifofaire:
    - atoms/
    - templates/
  - [frontend] src/components/AdCard.tsx: 
-    - ajout de la photo
     - css
   - AdEditionForm:
     - ❌ Noms des champs (raccord backend: typage)

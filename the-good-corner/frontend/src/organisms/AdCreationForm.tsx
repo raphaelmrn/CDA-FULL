@@ -1,18 +1,19 @@
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
-import { Category } from "../types/Category";
+import { Category } from "../types/Api";
 import Select from 'react-select'
+import sdk from "../libs/api";
 
 export default function AdCreationForm() {
     const [categories, setCategories]=useState<Category[]>([])
     const [tags, setTags]=useState([])
 
       async function fetchCategories() {
-        const {data} = await axios.get<Category[]>("http://localhost:3000/categories")
+        const data = await sdk.getCategories()
         setCategories(data)
     }
     async function fetchTags() {
-        let {data} = await axios.get("http://localhost:3000/tags")
+        let data = await sdk.getTags()
         type ApiTag = {
             id:number,
             name:string
@@ -33,8 +34,6 @@ export default function AdCreationForm() {
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement)
         const formJson = Object.fromEntries(formData.entries())
-
-        console.log(formJson);
         
         axios.post("http://localhost:3000/ads", formJson)
     }

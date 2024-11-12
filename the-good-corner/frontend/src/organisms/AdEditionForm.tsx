@@ -2,10 +2,15 @@ import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import Select from 'react-select'
 import { useNavigate } from "react-router-dom";
+import api from "../libs/api";
 
 type ApiResult = {
     id:number,
     name:string
+}
+type SelectOption = {
+    value:number,
+    label:string
 }
 export type AdEditionFormProps={
     id:number,
@@ -21,20 +26,17 @@ export type AdEditionFormProps={
 }
 export default function AdEditionForm(props:AdEditionFormProps) {
     const navigate = useNavigate()
-    const [categories, setCategories]=useState([])
-    const [tags, setTags]=useState([])
+    const [categories, setCategories]=useState<SelectOption[]>([])
+    const [tags, setTags]=useState<SelectOption[]>([])
 
-      async function fetchCategories() {
-        let {data} = await axios.get("http://localhost:3000/categories")
-        data = data.map((item:ApiResult)=>({value:item.id, label: item.name}))
-        setCategories(data)
+    async function fetchCategories() {
+        let data = await api.getCategories()
+        setCategories(data.map((item:ApiResult)=>({value:item.id, label: item.name})))
     }
     async function fetchTags() {
-        let {data} = await axios.get("http://localhost:3000/tags")
-        data = data.map((item:ApiResult)=>({value:item.id, label: item.name}))
-        setTags(data)
+        let data = await api.getTags()
+        setTags(data.map((item:ApiResult)=>({value:item.id, label: item.name})))
     }
-    
 
     useEffect( ()=>{
         fetchCategories()

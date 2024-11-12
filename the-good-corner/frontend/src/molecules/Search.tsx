@@ -1,10 +1,11 @@
-import axios from "axios"
 import { FormEvent, useState } from "react"
 import "./Search.module.css"
 import { Link } from "react-router-dom"
+import { searchAds } from "../libs/api"
+import { Ad } from "../types/Api"
 
 export default function Search() {
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState<Ad[]>([])
     const [noResults, setNoResults] = useState(false)
     const [needle, setNeedle] = useState("")
 
@@ -20,7 +21,7 @@ export default function Search() {
         }
         
         try{
-            const {data} = await axios.get(`http://localhost:3000/ads?needle=${evt.currentTarget.value}`)
+            const data = await searchAds(evt.currentTarget.value)
             setResults(data)
             setNoResults(false)
         } catch(err) {
