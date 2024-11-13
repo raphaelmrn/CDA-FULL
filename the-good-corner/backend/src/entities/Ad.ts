@@ -10,37 +10,47 @@ import {
 } from "typeorm";
 import { Category } from "./Category";
 import { Tag } from "./Tag";
+import { Field, ObjectType } from "type-graphql";
 
 @Entity()
+@ObjectType()
 export class Ad extends BaseEntity {
+	@Field()
 	@PrimaryGeneratedColumn()
 	id!: number;
 
+	@Field()
 	@Column()
 	title!: string;
 
-	@Column({nullable:true})
+	@Field()
+	@Column({ nullable: true })
 	description?: string;
 
+	@Field()
 	@Column()
 	owner!: string;
 
+	@Field()
 	@Column()
 	price!: number;
 
+	@Field()
 	@Column()
 	picture!: string;
 
+	@Field()
 	@Column()
 	location!: string;
 
+	@Field()
 	@Column()
 	createdAt!: Date;
 
 	@BeforeInsert()
 	updateDates() {
 		this.createdAt = new Date();
-	}  
+	}
 
 	@ManyToOne(
 		() => Category,
@@ -53,5 +63,5 @@ export class Ad extends BaseEntity {
 		(tag) => tag.ads,
 	)
 	@JoinTable()
-	tags!:Tag[]
+	tags!: Tag[];
 }
