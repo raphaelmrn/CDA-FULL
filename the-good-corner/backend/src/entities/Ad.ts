@@ -47,21 +47,23 @@ export class Ad extends BaseEntity {
 	@Column()
 	createdAt!: Date;
 
-	@BeforeInsert()
-	updateDates() {
-		this.createdAt = new Date();
-	}
-
+	@Field(() => Category)
 	@ManyToOne(
 		() => Category,
 		(category) => category.ads,
 	)
 	category!: Category;
 
+	@Field(() => [Tag])
 	@ManyToMany(
 		() => Tag,
 		(tag) => tag.ads,
 	)
 	@JoinTable()
 	tags!: Tag[];
+
+	@BeforeInsert()
+	updateDates() {
+		this.createdAt = new Date();
+	}
 }

@@ -5,10 +5,11 @@ Keskona:
   - ajouter decorateurs type-graphql sur entités
 - ecrire AdResolver
 - demarrer serveur GraphQL
+- completer AdResolver (reste du CRUD)
+  - On a pas su faire le PATCH ;_;
 
 KESKONFOUT:
-- completer AdResolver (reste du CRUD)
+- ecrire resolvers Category/Tag
  
 Keskifofaire:
 - nettoyer code
-- ecrire resolvers Category/Tag

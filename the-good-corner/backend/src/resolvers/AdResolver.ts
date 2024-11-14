@@ -1,5 +1,7 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Field, ID, InputType, Mutation, Query, Resolver } from "type-graphql";
 import { Ad } from "../entities/Ad";
+import type {  Category } from "../entities/Category";
+// import type { Tag } from "../entities/Tag";
 
 @InputType()
 class AdInput {
@@ -20,31 +22,36 @@ class AdInput {
 
 	@Field()
 	location!: string;
+
+	@Field(()=>ID)
+	category!: Category;
+
+	// @Field(()=>[ID])
+	// tags?: Tag[];
 }
 
 @Resolver(Ad)
 export class AdResolver {
 	@Query(() => [Ad])
 	async getAds() {
-		const ads = await Ad.find()
+		const ads = await Ad.find({relations:["category", "tags"]})
 		return ads;
 	}
 	
 	@Query(() => Ad)
 	async getAdById( @Arg("adId") id: string) {
-		const ad = await Ad.findOneByOrFail({id})
+		const ad = await Ad.findOneOrFail({
+			where:{id}, 
+			relations:["category", "tags"]
+		})
 		return ad;
 	}
 	
 	@Mutation(() => Ad)
-	async createAd(@Arg("data") {title, location, owner, picture, price, description}: AdInput) {
-		const ad = new Ad()
-		ad.title=title;
-		ad.location=location;
-		ad.owner=owner;
-		ad.picture=picture;
-		ad.price=price;
-		ad.description=description;
+	async createAd(@Arg("data") data: AdInput) {
+		let ad = new Ad()
+		ad = Object.assign(ad, {...data});
+		// if(data.tags?.length) ad.tags = data.tags
 		await ad.save()
 		return ad;
 	}
@@ -61,36 +68,9 @@ export class AdResolver {
 
 	@Mutation(() => Ad)
 	async replaceAdById( @Arg("adId") id: string, @Arg("data") data:AdInput ) {
-			let ad = await Ad.findOneByOrFail({id})
+		let ad = await Ad.findOneByOrFail({id})
 		ad = Object.assign(ad, data);
 		await ad.save()
-		return ad;  
-
-		// Autre méthode, plus verbeuse
-		// let ad = await Ad.findOneByOrFail({id})
-		// ad.title=title;
-		// ad.location=location;
-		// ad.owner=owner;
-		// ad.picture=picture;
-		// ad.price=price;
-		// ad.description=description;
-		// await ad.save()
-		// return ad;
+		return ad;
 	}
-
-	// WiP !!
-	// @Mutation(() => Ad)
-	// async patchAdById( @Arg("adId") id: string, @Arg("data") data:PartialAdInput ) {
-	// 	let ad = await Ad.findOneByOrFail({id})
-	// 	ad = Object.assign(ad, data);
-	// 	await ad.save()
-	// 	return ad;  
-	// }
-
-
-
-
-
-
-
 }
