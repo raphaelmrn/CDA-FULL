@@ -61,7 +61,7 @@ export class AdResolver {
 
 	@Mutation(() => Ad)
 	async replaceAdById( @Arg("adId") id: string, @Arg("data") data:AdInput ) {
-		let ad = await Ad.findOneByOrFail({id})
+			let ad = await Ad.findOneByOrFail({id})
 		ad = Object.assign(ad, data);
 		await ad.save()
 		return ad;  
@@ -78,7 +78,18 @@ export class AdResolver {
 		// return ad;
 	}
 
-	
+	// WiP !!
+	// @Mutation(() => Ad)
+	// async patchAdById( @Arg("adId") id: string, @Arg("data") data:PartialAdInput ) {
+	// 	let ad = await Ad.findOneByOrFail({id})
+	// 	ad = Object.assign(ad, data);
+	// 	await ad.save()
+	// 	return ad;  
+	// }
+
+
+
+
 
 
 
