@@ -7,8 +7,8 @@ Keskona:
 - demarrer serveur GraphQL
 
 KESKONFOUT:
+- completer AdResolver (reste du CRUD)
  
 Keskifofaire:
-- completer AdResolver (reste du CRUD)
 - nettoyer code
-- ecerire resolvers Category/Tag
+- ecrire resolvers Category/Tag

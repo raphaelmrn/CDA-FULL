@@ -48,4 +48,38 @@ export class AdResolver {
 		await ad.save()
 		return ad;
 	}
+
+	@Mutation(() => Boolean)
+	async deleteAdById( @Arg("adId") id: string) {
+		return (await Ad.delete({id})).affected
+
+		//@Elie > "Plus complet mais plus lent" (gère les relations)
+		// const ad = await Ad.findOneByOrFail({id})
+		// ad.remove()
+		// return true;
+	}
+
+	@Mutation(() => Ad)
+	async replaceAdById( @Arg("adId") id: string, @Arg("data") data:AdInput ) {
+		let ad = await Ad.findOneByOrFail({id})
+		ad = Object.assign(ad, data);
+		await ad.save()
+		return ad;  
+
+		// Autre méthode, plus verbeuse
+		// let ad = await Ad.findOneByOrFail({id})
+		// ad.title=title;
+		// ad.location=location;
+		// ad.owner=owner;
+		// ad.picture=picture;
+		// ad.price=price;
+		// ad.description=description;
+		// await ad.save()
+		// return ad;
+	}
+
+	
+
+
+
 }
