@@ -1,8 +1,8 @@
 import { Arg, Field, ID, InputType, Mutation, Query, Resolver } from "type-graphql";
+import { In } from "typeorm";
 import { Ad } from "../entities/Ad";
 import type {  Category } from "../entities/Category";
 import { Tag } from "../entities/Tag";
-import { In } from "typeorm";
 
 @InputType()
 class AdInput {
@@ -53,9 +53,7 @@ export class AdResolver {
 		let ad = new Ad()
 		ad = Object.assign(ad, data);
 		const tags =await Tag.findBy({id: In(data.tags)})
-		ad.tags = tags
-		console.log(ad);
-		
+		ad.tags = tags		
 		await ad.save()
 		return ad;
 	}
