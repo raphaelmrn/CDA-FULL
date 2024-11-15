@@ -38,6 +38,12 @@ export class AdResolver {
 		const ads = await Ad.find({relations:["category", "tags"]})
 		return ads;
 	}
+
+	@Query(() => [Ad])
+	async getAdsByCategory(@Arg("categoryId") id: string) {
+		const ads = await Ad.find({where: {category:{id}}})
+		return ads;
+	}
 	
 	@Query(() => Ad)
 	async getAdById( @Arg("adId") id: string) {

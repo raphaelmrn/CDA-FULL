@@ -2,7 +2,7 @@ import AdGallery from "../organisms/AdGallery";
 import { gql, useQuery } from "@apollo/client";
 
 const GET_ADS = gql`
-  query Query {
+query Query {
   getAds {
     id
     title
@@ -13,8 +13,7 @@ const GET_ADS = gql`
     location
     createdAt
   }
-}
-`;
+}`;
 
 export default function HomePage() {
 	const { loading, error, data } = useQuery(GET_ADS);

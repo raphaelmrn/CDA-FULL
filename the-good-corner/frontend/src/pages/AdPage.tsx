@@ -1,44 +1,48 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import AdDetail, { AdDetailProps } from "../organisms/AdDetail";
+import AdDetail from "../organisms/AdDetail";
 import AdEditionForm from "../organisms/AdEditionForm";
+import { gql, useQuery } from "@apollo/client";
 
+const GET_AD = gql`
+query Query($adId: String!) {
+  getAdById(adId: $adId) {
+    id
+    title
+    description
+    owner
+    price
+    picture
+    location
+    createdAt
+  }
+}`;
 
 export default function AdPage() {
-    const {adId} = useParams()
-	const [editionMode, setEditionMode] = useState(false)
-    const [ad, setAd] = useState<AdDetailProps|null>(null);
-    
-	async function fetchData() {
-		const { data } = await axios.get<AdDetailProps>(
-			`http://localhost:3000/ads/${adId}`,
-		);
-		setAd(data);
-	}
+	const { adId } = useParams();
+	const { loading, error, data } = useQuery(GET_AD, {
+		variables: { adId: adId },
+	});
 
-	const hClick = ()=>{
-		setEditionMode(!editionMode)
-	}
+	const [editionMode, setEditionMode] = useState(false);
 
-	useEffect(() => {
-		fetchData();
-	}, [adId]);
+	const hClick = () => {
+		setEditionMode(!editionMode);
+	};
 
-	if(!adId) return <p>Huh, we're missing the ad number :/</p>
-	
-	if(!ad) return <p>Loading...</p>
-
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Aw fck, something broke !</p>;
 	return (
 		<>
 			<label>
-				Edit mode: <input type='checkbox' checked={editionMode} onChange={hClick} />
+				Edit mode:{" "}
+				<input type="checkbox" checked={editionMode} onChange={hClick} />
 			</label>
-			{editionMode ?
-				<AdEditionForm {...ad} id={Number(adId)} />
-				:
-				<AdDetail {...ad} />
-			}
+			{editionMode ? (
+				<AdEditionForm {...data.getAdById} id={Number(adId)} />
+			) : (
+				<AdDetail {...data.getAdById} />
+			)}
 		</>
-	)
+	);
 }

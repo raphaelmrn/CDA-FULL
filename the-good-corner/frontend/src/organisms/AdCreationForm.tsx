@@ -1,36 +1,31 @@
 import axios from "axios";
-import { FormEvent, useEffect, useState } from "react";
-import { Category } from "../types/Api";
+import { useEffect, type FormEvent } from "react";
 import Select from "react-select";
-import sdk from "../libs/api";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { redirect } from "react-router-dom";
+
+const GET_CATEGORIES_AND_TAGS = gql`
+query GetCategories {
+  getCategories {
+    id
+    name
+  }
+  getTags {
+    id
+    name
+  }
+}`;
+const CREATE_AD = gql`
+mutation Mutation($data: AdInput!) {
+  createAd(data: $data) {
+    id
+  }
+}`;
 
 export default function AdCreationForm() {
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [tags, setTags] = useState([]);
-
-	async function fetchCategories() {
-		// const data = await sdk.getCategories()
-		const data: Category[] = [];
-		setCategories(data);
-	}
-	async function fetchTags() {
-		// let data = await sdk.getTags();
-		type ApiTag = {
-			id: number;
-			name: string;
-		};
-		// data = data.map((apiTag: ApiTag) => ({
-		// 	value: apiTag.id,
-		// 	label: apiTag.name,
-		// }));
-		const data: ApiTag[] = [];
-		setTags(data);
-	}
-
-	// useEffect(() => {
-	// 	fetchCategories();
-	// 	fetchTags();
-	// }, []);
+	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
+	const [createAd, { data: dataSub, loading: subLoading, error: subError }] =
+		useMutation(CREATE_AD);
 
 	const hSubmit = (evt: FormEvent) => {
 		evt.preventDefault();
@@ -39,9 +34,18 @@ export default function AdCreationForm() {
 		const formData = new FormData(form as HTMLFormElement);
 		const formJson = Object.fromEntries(formData.entries());
 
-		axios.post("http://localhost:3000/ads", formJson);
+		//axios.post("http://localhost:3000/ads", formJson);
+
+		createAd({ variables: { data: formJson } });
 	};
 
+	useEffect(() => {
+		if (!dataSub) return;
+		redirect(`/ads/${dataSub.createAd.id}`);
+	}, [dataSub]);
+
+	if (error || subError) return <>Error!</>;
+	if (loading) return <>Loading...</>;
 	return (
 		<main className="main-content">
 			<form onSubmit={hSubmit}>
@@ -70,7 +74,7 @@ export default function AdCreationForm() {
 					<input className="text-field" name="location" />
 				</label>
 				<select name="categoryId">
-					{categories.map((category) => (
+					{data.getCategories.map((category) => (
 						<option key={category.id} value={category.id}>
 							{category.name}
 						</option>
@@ -78,9 +82,19 @@ export default function AdCreationForm() {
 				</select>
 				<label>
 					Tags:
-					<Select options={tags} isMulti name="tagsIds" delimiter="," />
+					<Select
+						options={data.getTags.map((apiTag: ApiTag) => ({
+							value: apiTag.id,
+							label: apiTag.name,
+						}))}
+						isMulti
+						name="tagsIds"
+						delimiter=","
+					/>
 				</label>
-				<button className="button">Create Ad!</button>
+				<button className="button" disabled={subLoading}>
+					Create Ad!
+				</button>
 			</form>
 		</main>
 	);
