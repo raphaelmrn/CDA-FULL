@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Category } from "../types/Api";
 import Search from "../molecules/Search";
-import api from "../libs/api";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_CATEGORIES = gql`
+  query Query {
+  getCategories {
+    id
+    name
+  }
+}
+`;
 
 function Header() {
-	const [categories, setCategories] = useState<Category[]>([]);
+	const { loading, error, data } = useQuery(GET_CATEGORIES);
 
-	async function fetchCategories() {
-		// const data = await api.getCategories()
-		const data: Category[] = [];
-		setCategories(data);
-	}
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Achtung! We broke something!</p>;
 
-	useEffect(() => {
-		fetchCategories();
-	}, []);
 	return (
 		<header className="header">
 			<div className="main-menu">
@@ -32,7 +33,7 @@ function Header() {
 				</Link>
 			</div>
 			<nav className="categories-navigation">
-				{categories.map((cat, id) => (
+				{data.getCategories.map((cat, id) => (
 					<span key={cat.id}>
 						{id > 0 && "•"}
 						<Link
