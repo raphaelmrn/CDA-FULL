@@ -5,16 +5,17 @@ import Search from "../molecules/Search";
 import api from "../libs/api";
 
 function Header() {
-    const [categories, setCategories]=useState<Category[]>([])
+	const [categories, setCategories] = useState<Category[]>([]);
 
-    async function fetchCategories() {
-        const data = await api.getCategories()
-        setCategories(data)
-    }
+	async function fetchCategories() {
+		// const data = await api.getCategories()
+		const data: Category[] = [];
+		setCategories(data);
+	}
 
-    useEffect( ()=>{
-        fetchCategories()
-    }, [] )
+	useEffect(() => {
+		fetchCategories();
+	}, []);
 	return (
 		<header className="header">
 			<div className="main-menu">
@@ -34,7 +35,10 @@ function Header() {
 				{categories.map((cat, id) => (
 					<span key={cat.id}>
 						{id > 0 && "•"}
-						<Link to={`/categories/${cat.id}`} className="category-navigation-link" >
+						<Link
+							to={`/categories/${cat.id}`}
+							className="category-navigation-link"
+						>
 							{cat.name}
 						</Link>
 					</span>
