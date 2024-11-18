@@ -4,20 +4,6 @@ import AdDetail from "../organisms/AdDetail";
 import AdEditionForm from "../organisms/AdEditionForm";
 import { gql, useQuery } from "@apollo/client";
 
-const GET_AD = gql`
-query Query($adId: String!) {
-  getAdById(adId: $adId) {
-    id
-    title
-    description
-    owner
-    price
-    picture
-    location
-    createdAt
-  }
-}`;
-
 export default function AdPage() {
 	const { adId } = useParams();
 	const { loading, error, data } = useQuery(GET_AD, {

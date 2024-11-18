@@ -1,9 +1,10 @@
-import AdCard, { AdCardProps } from "../molecules/AdCard";
+import type { Ad } from "../libs/graphql/generated/graphql-types";
+import AdCard from "../molecules/AdCard";
 
 type AdGalleryProps = {
-	title:string,
-	ads:AdCardProps[]
-}
+	title: string;
+	ads: Ad[];
+};
 export default function AdGallery(props: AdGalleryProps) {
 	return (
 		<main className="main-content">

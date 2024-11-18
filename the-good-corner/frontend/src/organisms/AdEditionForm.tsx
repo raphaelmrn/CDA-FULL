@@ -1,8 +1,6 @@
-import axios from "axios";
-import { FormEvent, useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import api from "../libs/api";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 type ApiResult = {
@@ -25,50 +23,12 @@ export type AdEditionFormProps = {
 	category: ApiResult;
 	tags: ApiResult[];
 };
-const GET_CATEGORIES_AND_TAGS = gql`
-query GetCategories {
-  getCategories {
-    id
-    name
-  }
-  getTags {
-    id
-    name
-  }
-}`;
-const RELPACE_AD = gql`
-mutation Mutation($data: AdInput!, $adId: String!) {
-  replaceAdById(data: $data, adId: $adId) {
-    id
-  }
-}`;
 
 export default function AdEditionForm(props: AdEditionFormProps) {
 	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
 	const navigate = useNavigate();
-	const [replaceAd, { data: dataSub, loading: subLoading, error: subError }] =
-		useMutation(RELPACE_AD);
-
-	const [categories, setCategories] = useState<SelectOption[]>([]);
-	const [tags, setTags] = useState<SelectOption[]>([]);
-
-	async function fetchCategories() {
-		let data = await api.getCategories();
-		setCategories(
-			data.map((item: ApiResult) => ({ value: item.id, label: item.name })),
-		);
-	}
-	async function fetchTags() {
-		let data = await api.getTags();
-		setTags(
-			data.map((item: ApiResult) => ({ value: item.id, label: item.name })),
-		);
-	}
-
-	useEffect(() => {
-		fetchCategories();
-		fetchTags();
-	}, []);
+	const [replaceAd] = useMutation(RELPACE_AD);
+	const [deleteAd] = useMutation(DLEETE_AD);
 
 	const hSubmit = (evt: FormEvent) => {
 		evt.preventDefault();
@@ -82,14 +42,14 @@ export default function AdEditionForm(props: AdEditionFormProps) {
 			price: Number.parseFloat(formJson.price as string),
 			tags: (formJson.tags as string).split(","),
 		};
-		//axios.put(`http://localhost:3000/ads/${props.id}`, formJson);
+
 		replaceAd({
 			variables: { data: formattedData, adId: props.id.toString() },
 		});
 	};
 
 	const hDelete = async () => {
-		await axios.delete(`http://localhost:3000/ads/${props.id}`);
+		await deleteAd({ variables: { adId: props.id.toString() } });
 		navigate("/");
 	};
 
@@ -167,7 +127,9 @@ export default function AdEditionForm(props: AdEditionFormProps) {
 				</label>
 				<button className="button">Update Ad!</button>
 			</form>
-			<button onClick={hDelete}>Delete Ad!</button>
+			<button type="button" onClick={hDelete}>
+				Delete Ad!
+			</button>
 		</main>
 	);
 }

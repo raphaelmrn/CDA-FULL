@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
+import type { Ad } from "../libs/graphql/generated/graphql-types";
 
-export type AdCardProps = {
-	id:number
-	title: string;
-	picture: string;
-	price: number;
-};
-export default function AdCard(props: AdCardProps) {
+export default function AdCard(props: Ad) {
 	return (
 		<div className="ad-card-container">
 			<Link className="ad-card-link" to={`/ads/${props.id}`}>

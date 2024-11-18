@@ -2,15 +2,6 @@ import { Link } from "react-router-dom";
 import Search from "../molecules/Search";
 import { gql, useQuery } from "@apollo/client";
 
-const GET_CATEGORIES = gql`
-  query Query {
-  getCategories {
-    id
-    name
-  }
-}
-`;
-
 function Header() {
 	const { loading, error, data } = useQuery(GET_CATEGORIES);
 

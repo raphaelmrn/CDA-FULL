@@ -1,7 +1,6 @@
 import { type FormEvent, useState } from "react";
 import "./Search.module.css";
 import { Link } from "react-router-dom";
-import api from "../libs/api";
 import type { Ad } from "../types/Api";
 
 export default function Search() {
@@ -21,7 +20,7 @@ export default function Search() {
 		}
 
 		try {
-			const data = await api.searchAds(evt.currentTarget.value);
+			const data = [];
 			setResults(data);
 			setNoResults(false);
 		} catch (err) {

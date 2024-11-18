@@ -2,17 +2,6 @@ import AdGallery from "../organisms/AdGallery";
 import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-const GET_ADS_BY_CATGEGORY = gql`
-query Query($categoryId: String!) {
-  getAdsByCategory(categoryId: $categoryId) {
-    id
-    title
-    price
-    picture
-  }
-}
-`;
-
 export default function CategoryPage() {
 	const { catId } = useParams();
 	const { loading, error, data } = useQuery(GET_ADS_BY_CATGEGORY, {

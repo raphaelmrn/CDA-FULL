@@ -9,10 +9,19 @@ Keskona:
   - On a pas su faire le PATCH ;_;
 - ecrire resolvers Category/Tag
 - adCreationForm
-
-KESKONFOUT:
 - AdEditionForm
 
-Keskifofaire:
+KESKONFOUT:
 - nettoyer code
+
+Keskifofaire:
 - Implementer graphql-codegen
+
+
+
+
+
+
+✅ sandbox -> query deleteAd > dans une constante
+✅ creer un useQuery
+✅ hDelete -> appeler la query (avec id)

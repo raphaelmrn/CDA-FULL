@@ -3,24 +3,6 @@ import Select from "react-select";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
-const GET_CATEGORIES_AND_TAGS = gql`
-query GetCategories {
-  getCategories {
-    id
-    name
-  }
-  getTags {
-    id
-    name
-  }
-}`;
-const CREATE_AD = gql`
-mutation Mutation($data: AdInput!) {
-  createAd(data: $data) {
-    id
-  }
-}`;
-
 export default function AdCreationForm() {
 	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
 	const [createAd, { data: dataSub, loading: subLoading, error: subError }] =
