@@ -7,9 +7,12 @@ Keskona:
 - demarrer serveur GraphQL
 - completer AdResolver (reste du CRUD)
   - On a pas su faire le PATCH ;_;
+- ecrire resolvers Category/Tag
+- adCreationForm
 
 KESKONFOUT:
-- ecrire resolvers Category/Tag
- 
+- AdEditionForm
+
 Keskifofaire:
 - nettoyer code
+- Implementer graphql-codegen

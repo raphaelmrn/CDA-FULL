@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useEffect, type FormEvent } from "react";
 import Select from "react-select";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GET_CATEGORIES_AND_TAGS = gql`
 query GetCategories {
@@ -26,6 +25,7 @@ export default function AdCreationForm() {
 	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
 	const [createAd, { data: dataSub, loading: subLoading, error: subError }] =
 		useMutation(CREATE_AD);
+	const navigate = useNavigate();
 
 	const hSubmit = (evt: FormEvent) => {
 		evt.preventDefault();
@@ -34,15 +34,19 @@ export default function AdCreationForm() {
 		const formData = new FormData(form as HTMLFormElement);
 		const formJson = Object.fromEntries(formData.entries());
 
-		//axios.post("http://localhost:3000/ads", formJson);
+		const formattedData = {
+			...formJson,
+			price: Number.parseFloat(formJson.price as string),
+			tags: (formJson.tags as string).split(","),
+		};
 
-		createAd({ variables: { data: formJson } });
+		createAd({ variables: { data: formattedData } });
 	};
 
 	useEffect(() => {
 		if (!dataSub) return;
-		redirect(`/ads/${dataSub.createAd.id}`);
-	}, [dataSub]);
+		navigate(`/ads/${dataSub.createAd.id}`);
+	}, [dataSub, navigate]);
 
 	if (error || subError) return <>Error!</>;
 	if (loading) return <>Loading...</>;
@@ -63,7 +67,7 @@ export default function AdCreationForm() {
 				</label>
 				<label>
 					Price:
-					<input className="text-field" name="price" />
+					<input className="text-field" name="price" type="number" />
 				</label>
 				<label>
 					Picture:
@@ -73,7 +77,7 @@ export default function AdCreationForm() {
 					Location:
 					<input className="text-field" name="location" />
 				</label>
-				<select name="categoryId">
+				<select name="category">
 					{data.getCategories.map((category) => (
 						<option key={category.id} value={category.id}>
 							{category.name}
@@ -88,7 +92,7 @@ export default function AdCreationForm() {
 							label: apiTag.name,
 						}))}
 						isMulti
-						name="tagsIds"
+						name="tags"
 						delimiter=","
 					/>
 				</label>
