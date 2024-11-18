@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AdDetail from "../organisms/AdDetail";
 import AdEditionForm from "../organisms/AdEditionForm";
-import { gql, useQuery } from "@apollo/client";
+import { useGetAdQuery } from "../libs/graphql/generated/graphql-types";
 
 export default function AdPage() {
 	const { adId } = useParams();
-	const { loading, error, data } = useQuery(GET_AD, {
-		variables: { adId: adId },
+	const { loading, error, data } = useGetAdQuery({
+		variables: { adId: `${adId}` },
 	});
 
 	const [editionMode, setEditionMode] = useState(false);
@@ -18,6 +18,7 @@ export default function AdPage() {
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Aw fck, something broke !</p>;
+	if (!data || !adId) return <p>We couldn't find anything to display</p>;
 	return (
 		<>
 			<label>
@@ -25,7 +26,7 @@ export default function AdPage() {
 				<input type="checkbox" checked={editionMode} onChange={hClick} />
 			</label>
 			{editionMode ? (
-				<AdEditionForm {...data.getAdById} id={Number(adId)} />
+				<AdEditionForm {...data.getAdById} id={adId} />
 			) : (
 				<AdDetail {...data.getAdById} />
 			)}

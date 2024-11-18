@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from "react";
 import "./Search.module.css";
 import { Link } from "react-router-dom";
-import type { Ad } from "../types/Api";
+import type { Ad } from "../libs/graphql/generated/graphql-types";
 
 export default function Search() {
 	const [results, setResults] = useState<Ad[]>([]);
@@ -20,18 +20,21 @@ export default function Search() {
 		}
 
 		try {
-			const data = [];
-			setResults(data);
-			setNoResults(false);
+			// TODO
+			// const data = [];
+			// setResults(data);
+			// setNoResults(false);
 		} catch (err) {
-			setResults([]);
-			setNoResults(true);
+			// TODO
+			// setResults([]);
+			// setNoResults(true);
 		}
 	};
 
 	const hNavigate = () => {
-		setResults([]);
-		setNeedle("");
+		// TODO
+		// setResults([]);
+		// setNeedle("");
 	};
 
 	return (

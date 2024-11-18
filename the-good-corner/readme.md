@@ -10,18 +10,23 @@ Keskona:
 - ecrire resolvers Category/Tag
 - adCreationForm
 - AdEditionForm
+- Implementer graphql-codegen
 
 KESKONFOUT:
 - nettoyer code
 
 Keskifofaire:
-- Implementer graphql-codegen
+- molecules/Search
+  - Fonctionnement general
+
+- organisms/AdCreationForm
+  - label sur Select (multi-select)
+- organisms/AdEditionForm
+  - label sur Select (multi-select)
+  
+- pages/AdPage
+  - getAdById ne fournit pas la categorie ou les tags (x2)
+- pages/HomePage
+  - getAdById ne fournit pas la categorie ou les tags
 
 
-
-
-
-
-✅ sandbox -> query deleteAd > dans une constante
-✅ creer un useQuery
-✅ hDelete -> appeler la query (avec id)

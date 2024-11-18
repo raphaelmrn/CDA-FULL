@@ -48,7 +48,7 @@ export class AdResolver {
 	@Query(() => Ad)
 	async getAdById( @Arg("adId") id: string) {
 		const ad = await Ad.findOneOrFail({
-			where:{id}, 
+			where:{id},
 			relations:["category", "tags"]
 		})
 		return ad;
@@ -59,7 +59,7 @@ export class AdResolver {
 		let ad = new Ad()
 		ad = Object.assign(ad, data);
 		const tags =await Tag.findBy({id: In(data.tags)})
-		ad.tags = tags		
+		ad.tags = tags
 		await ad.save()
 		return ad;
 	}

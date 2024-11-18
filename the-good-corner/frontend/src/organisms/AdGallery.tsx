@@ -11,13 +11,7 @@ export default function AdGallery(props: AdGalleryProps) {
 			<h2>{props.title}</h2>
 			<section className="recent-ads">
 				{props.ads.map((ad) => (
-					<AdCard
-						key={ad.id}
-						id={ad.id}
-						picture={ad.picture}
-						title={ad.title}
-						price={ad.price}
-					/>
+					<AdCard key={ad.id} {...ad} />
 				))}
 			</section>
 		</main>

@@ -1,12 +1,17 @@
 import { useEffect, type FormEvent } from "react";
 import Select from "react-select";
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import {
+	type AdInput,
+	useCreateAdMutation,
+	useGetCategoriesAndTagsQuery,
+} from "../libs/graphql/generated/graphql-types";
 
 export default function AdCreationForm() {
-	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
+	const { loading, error, data } = useGetCategoriesAndTagsQuery();
 	const [createAd, { data: dataSub, loading: subLoading, error: subError }] =
-		useMutation(CREATE_AD);
+		useCreateAdMutation();
+
 	const navigate = useNavigate();
 
 	const hSubmit = (evt: FormEvent) => {
@@ -22,7 +27,7 @@ export default function AdCreationForm() {
 			tags: (formJson.tags as string).split(","),
 		};
 
-		createAd({ variables: { data: formattedData } });
+		createAd({ variables: { data: formattedData as AdInput } });
 	};
 
 	useEffect(() => {
@@ -32,6 +37,7 @@ export default function AdCreationForm() {
 
 	if (error || subError) return <>Error!</>;
 	if (loading) return <>Loading...</>;
+	if (!data) return <>We couldn't find anything to display</>;
 	return (
 		<main className="main-content">
 			<form onSubmit={hSubmit}>
@@ -78,7 +84,7 @@ export default function AdCreationForm() {
 						delimiter=","
 					/>
 				</label>
-				<button className="button" disabled={subLoading}>
+				<button type="submit" className="button" disabled={subLoading}>
 					Create Ad!
 				</button>
 			</form>

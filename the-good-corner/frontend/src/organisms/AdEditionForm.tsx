@@ -1,34 +1,19 @@
 import type { FormEvent } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import {
+	type Ad,
+	type AdInput,
+	useDeleteAdMutation,
+	useGetCategoriesAndTagsQuery,
+	useReplaceAdMutation,
+} from "../libs/graphql/generated/graphql-types";
 
-type ApiResult = {
-	id: number;
-	name: string;
-};
-type SelectOption = {
-	value: number;
-	label: string;
-};
-export type AdEditionFormProps = {
-	id: number;
-	title: string;
-	picture: string;
-	price: number;
-	description: string;
-	owner: string;
-	createdAt: string;
-	location: string;
-	category: ApiResult;
-	tags: ApiResult[];
-};
-
-export default function AdEditionForm(props: AdEditionFormProps) {
-	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_TAGS);
+export default function AdEditionForm(props: Ad) {
+	const { loading, error, data } = useGetCategoriesAndTagsQuery();
 	const navigate = useNavigate();
-	const [replaceAd] = useMutation(RELPACE_AD);
-	const [deleteAd] = useMutation(DLEETE_AD);
+	const [replaceAd] = useReplaceAdMutation();
+	const [deleteAd] = useDeleteAdMutation();
 
 	const hSubmit = (evt: FormEvent) => {
 		evt.preventDefault();
@@ -44,7 +29,7 @@ export default function AdEditionForm(props: AdEditionFormProps) {
 		};
 
 		replaceAd({
-			variables: { data: formattedData, adId: props.id.toString() },
+			variables: { data: formattedData as AdInput, adId: props.id.toString() },
 		});
 	};
 
@@ -55,6 +40,7 @@ export default function AdEditionForm(props: AdEditionFormProps) {
 
 	if (error) return <>Error!</>;
 	if (loading) return <>Loading...</>;
+	if (!data) return <>We couldn't find anything to display</>;
 	return (
 		<main className="main-content">
 			<form onSubmit={hSubmit}>
@@ -125,7 +111,9 @@ export default function AdEditionForm(props: AdEditionFormProps) {
 						delimiter=","
 					/>
 				</label>
-				<button className="button">Update Ad!</button>
+				<button type="submit" className="button">
+					Update Ad!
+				</button>
 			</form>
 			<button type="button" onClick={hDelete}>
 				Delete Ad!
