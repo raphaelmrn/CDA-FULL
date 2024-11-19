@@ -1,5 +1,5 @@
 import { Arg, Field, ID, InputType, Mutation, Query, Resolver } from "type-graphql";
-import { In } from "typeorm";
+import { In, Like } from "typeorm";
 import { Ad } from "../entities/Ad";
 import type {  Category } from "../entities/Category";
 import { Tag } from "../entities/Tag";
@@ -42,6 +42,12 @@ export class AdResolver {
 	@Query(() => [Ad])
 	async getAdsByCategory(@Arg("categoryId") id: string) {
 		const ads = await Ad.find({where: {category:{id}}})
+		return ads;
+	}
+
+	@Query(() => [Ad])
+	async getAdsByNeedle(@Arg("needle") needle: string) {
+		const ads = await Ad.find({where: {title: Like(`%${needle}%`)} })
 		return ads;
 	}
 	

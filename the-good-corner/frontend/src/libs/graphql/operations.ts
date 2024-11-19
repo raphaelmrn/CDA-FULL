@@ -50,6 +50,14 @@ query GetAd($adId: String!) {
     picture
     location
     createdAt
+    category {
+      id
+      name
+    }
+    tags {
+      id
+      name
+    }
   }
 }`;
 
@@ -75,5 +83,13 @@ query GetAds {
     picture
     location
     createdAt
+  }
+}`;
+
+export const GET_ADS_BY_NEEDLE = gql`
+query GetAdsByNeedle($needle: String!) {
+  getAdsByNeedle(needle: $needle) {
+    id
+    title
   }
 }`;

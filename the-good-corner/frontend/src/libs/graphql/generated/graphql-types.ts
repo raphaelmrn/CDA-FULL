@@ -78,6 +78,7 @@ export type Query = {
   getAdById: Ad;
   getAds: Array<Ad>;
   getAdsByCategory: Array<Ad>;
+  getAdsByNeedle: Array<Ad>;
   getCategories: Array<Category>;
   getTags: Array<Tag>;
 };
@@ -90,6 +91,11 @@ export type QueryGetAdByIdArgs = {
 
 export type QueryGetAdsByCategoryArgs = {
   categoryId: Scalars['String']['input'];
+};
+
+
+export type QueryGetAdsByNeedleArgs = {
+  needle: Scalars['String']['input'];
 };
 
 export type Tag = {
@@ -136,7 +142,7 @@ export type GetAdQueryVariables = Exact<{
 }>;
 
 
-export type GetAdQuery = { __typename?: 'Query', getAdById: { __typename?: 'Ad', id: string, title: string, description: string, owner: string, price: number, picture: string, location: string, createdAt: any } };
+export type GetAdQuery = { __typename?: 'Query', getAdById: { __typename?: 'Ad', id: string, title: string, description: string, owner: string, price: number, picture: string, location: string, createdAt: any, category: { __typename?: 'Category', id: string, name: string }, tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
 
 export type GetAdsByCategoryQueryVariables = Exact<{
   categoryId: Scalars['String']['input'];
@@ -149,6 +155,13 @@ export type GetAdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAdsQuery = { __typename?: 'Query', getAds: Array<{ __typename?: 'Ad', id: string, title: string, description: string, owner: string, price: number, picture: string, location: string, createdAt: any }> };
+
+export type GetAdsByNeedleQueryVariables = Exact<{
+  needle: Scalars['String']['input'];
+}>;
+
+
+export type GetAdsByNeedleQuery = { __typename?: 'Query', getAdsByNeedle: Array<{ __typename?: 'Ad', id: string, title: string }> };
 
 
 export const GetCategoriesAndTagsDocument = gql`
@@ -344,6 +357,14 @@ export const GetAdDocument = gql`
     picture
     location
     createdAt
+    category {
+      id
+      name
+    }
+    tags {
+      id
+      name
+    }
   }
 }
     `;
@@ -469,3 +490,44 @@ export type GetAdsQueryHookResult = ReturnType<typeof useGetAdsQuery>;
 export type GetAdsLazyQueryHookResult = ReturnType<typeof useGetAdsLazyQuery>;
 export type GetAdsSuspenseQueryHookResult = ReturnType<typeof useGetAdsSuspenseQuery>;
 export type GetAdsQueryResult = Apollo.QueryResult<GetAdsQuery, GetAdsQueryVariables>;
+export const GetAdsByNeedleDocument = gql`
+    query GetAdsByNeedle($needle: String!) {
+  getAdsByNeedle(needle: $needle) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetAdsByNeedleQuery__
+ *
+ * To run a query within a React component, call `useGetAdsByNeedleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAdsByNeedleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAdsByNeedleQuery({
+ *   variables: {
+ *      needle: // value for 'needle'
+ *   },
+ * });
+ */
+export function useGetAdsByNeedleQuery(baseOptions: Apollo.QueryHookOptions<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables> & ({ variables: GetAdsByNeedleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>(GetAdsByNeedleDocument, options);
+      }
+export function useGetAdsByNeedleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>(GetAdsByNeedleDocument, options);
+        }
+export function useGetAdsByNeedleSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>(GetAdsByNeedleDocument, options);
+        }
+export type GetAdsByNeedleQueryHookResult = ReturnType<typeof useGetAdsByNeedleQuery>;
+export type GetAdsByNeedleLazyQueryHookResult = ReturnType<typeof useGetAdsByNeedleLazyQuery>;
+export type GetAdsByNeedleSuspenseQueryHookResult = ReturnType<typeof useGetAdsByNeedleSuspenseQuery>;
+export type GetAdsByNeedleQueryResult = Apollo.QueryResult<GetAdsByNeedleQuery, GetAdsByNeedleQueryVariables>;
