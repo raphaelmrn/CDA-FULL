@@ -12,8 +12,6 @@ Keskona:
 - AdEditionForm
 - Implementer graphql-codegen
 - nettoyer code
-
-KESKONFOUT:
 - migration sqlite>postgresql
   - compose.yaml: ajouter un service db
   - backend: modifier src/config/db pour utiliser le service db
@@ -22,7 +20,9 @@ KESKONFOUT:
     - compose.yalm: utiliser le .env
   - installer nginx
     - compose.yaml: service gateway
-    - nginx.conf: 
+    - nginx.conf: rediriger chaque requete en fonction de son url
+
+KESKONFOUT:
 
 Keskifofaire:
 - molecules/Search
@@ -37,3 +37,4 @@ Keskifofaire:
   - getAdById ne fournit pas la categorie ou les tags (x2)
 - pages/HomePage
   - getAdById ne fournit pas la categorie ou les tags
+
