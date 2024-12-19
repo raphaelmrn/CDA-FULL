@@ -9,6 +9,7 @@ services:
       DB_SCHEMA: ${DB_SCHEMA}
       DB_USER: ${DB_USER}
       DB_HOST: ${DB_HOST}
+  
   frontend:
     container_name: frontend
     build: ./frontend
@@ -16,6 +17,7 @@ services:
       - ./frontend/src/:/app/src/
     environment:
       VITE_GATEWAY_PORT: ${GATEWAY_PORT}
+  
   database:
     container_name: database
     image: postgres
@@ -26,9 +28,11 @@ services:
       POSTGRES_DB: ${DB_SCHEMA}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_HOST: ${DB_HOST}
+  
   vizualizer:
     container_name: vizualizer
     image: adminer
+  
   gateway:
     container_name: gateway
     image: nginx
