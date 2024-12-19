@@ -11,9 +11,18 @@ Keskona:
 - adCreationForm
 - AdEditionForm
 - Implementer graphql-codegen
+- nettoyer code
 
 KESKONFOUT:
-- nettoyer code
+- migration sqlite>postgresql
+  - compose.yaml: ajouter un service db
+  - backend: modifier src/config/db pour utiliser le service db
+  - ajouter un .env
+    - backend: utiliser le .env
+    - compose.yalm: utiliser le .env
+  - installer nginx
+    - compose.yaml: service gateway
+    - nginx.conf: 
 
 Keskifofaire:
 - molecules/Search
@@ -28,5 +37,3 @@ Keskifofaire:
   - getAdById ne fournit pas la categorie ou les tags (x2)
 - pages/HomePage
   - getAdById ne fournit pas la categorie ou les tags
-
-

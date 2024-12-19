@@ -8,7 +8,6 @@ import HomePage from "./pages/HomePage.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
 import AdCreationPage from "./pages/AdCreationPage.tsx";
 import AdPage from "./pages/AdPage.tsx";
-// import { client } from "./libs/api.ts";
 
 const router = createBrowserRouter([
 	{
@@ -36,7 +35,7 @@ const router = createBrowserRouter([
 ]);
 
 const client = new ApolloClient({
-	uri: "http://localhost:3000",
+	uri: `http://localhost:${import.meta.env.VITE_GATEWAY_PORT}/api`,
 	cache: new InMemoryCache(),
 });
 
