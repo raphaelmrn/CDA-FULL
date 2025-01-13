@@ -8,11 +8,17 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/* 
+
 export default function ({ messages }: { messages: Message[] }): Message[] {
-  return [];
+  return messages.sort((a, b) => {
+    const dateA = new Date(a.sentAt).getTime();
+    const dateB = new Date(b.sentAt).getTime();
+    if (dateA !== dateB) {
+      return dateA - dateB;
+    }
+    return a.content.length - b.content.length;
+  });
 }
- */
 
 // used interfaces, do not touch
 export interface Message {
