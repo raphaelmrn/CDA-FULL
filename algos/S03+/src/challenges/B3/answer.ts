@@ -9,8 +9,6 @@
  * @returns Sorted list of messages with the unread information
  */
 
-// ↓ uncomment bellow lines and add your response!
-/* 
 export default function ({
   lastActivityDatetime,
   messages,
@@ -18,9 +16,13 @@ export default function ({
   lastActivityDatetime: string;
   messages: Message[];
 }): MessageWithUnread[] {
-  return [];
+  return messages
+    .sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime()) // Trier par date (du plus ancien au plus récent)
+    .map((message) => ({
+      ...message,
+      unread: new Date(message.sentAt) > new Date(lastActivityDatetime), // Marquer comme non lu si envoyé après la dernière activité
+    }));
 }
- */
 
 // used interfaces, do not touch
 export interface Message {

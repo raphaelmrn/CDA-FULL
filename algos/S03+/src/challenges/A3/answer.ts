@@ -9,16 +9,30 @@
  * @returns The same list but with a new closestAds prop on each
  */
 
-// ↓ uncomment bellow lines and add your response!
-/* 
 export default function ({
   ads,
 }: {
   ads: AdWithTags[];
 }): AdWithTagsAndClosestAds[] {
-  return [];
+  return ads.map((ad) => {
+    const similarAds = ads
+      .filter((otherAd) => otherAd.title !== ad.title)
+      .map((otherAd) => ({
+        ad: otherAd,
+        commonTags: ad.tags.filter((tag) => otherAd.tags.includes(tag)).length,
+      }))
+      .filter(({ commonTags }) => commonTags > 0)
+      .sort((a, b) => {
+        if (b.commonTags !== a.commonTags) {
+          return b.commonTags - a.commonTags;
+        }
+        return a.ad.title.localeCompare(b.ad.title);
+      })
+      .map(({ ad }) => ad);
+
+    return { ...ad, closestAds: similarAds };
+  });
 }
- */
 
 // used interfaces, do not touch
 export interface AdWithTags {
